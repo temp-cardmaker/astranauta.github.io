@@ -83,7 +83,7 @@ function loadspells() {
 			}
 
 
-			$("ul.spells").append("<li class='row' id='"+i+"' data-link='"+encodeURIComponent(name).toLowerCase().replace("'","%27")+"' data-name='"+encodeURIComponent(name).replace("'","%27")+"'><span class='name col-xs-3'>"+name+"</span> <span class='source col-xs-2' title=\""+parsesource(source)+"\">"+source+"</span> <span class='level col-xs-2'>"+leveltext+"</span> <span class='school col-xs-2'>"+schooltext+"</span> <span class='classes col-xs-3'>"+curspell.classes+"</span> </li>");
+			$("ul.spells").append("<li class='row' id='"+i+"' data-link='"+encodeURIComponent(name).toLowerCase().replace("'","%27")+"' data-name='"+encodeURIComponent(name).replace("'","%27")+"'><span class='add col-xs-1'><input name='selectedspells' type='checkbox'></span><span class='name col-xs-2'>"+name+"</span> <span class='source col-xs-2' title=\""+parsesource(source)+"\">"+source+"</span> <span class='level col-xs-2'>"+leveltext+"</span> <span class='school col-xs-2'>"+schooltext+"</span> <span class='classes col-xs-3'>"+curspell.classes+"</span> </li>");
 
 			if (!$("select.levelfilter:contains('"+parsespelllevel(curspell.level)+"')").length) {
 				$("select.levelfilter").append("<option value='"+curspell.level+"'>"+parsespelllevel(curspell.level)+"</option>");
@@ -196,7 +196,19 @@ function loadspells() {
 			} else $(this).attr("sortby", "asc");
 			spellslist.sort($(this).data("sort"), { order: $(this).attr("sortby"), sortFunction: sortspells });
 		});
-
+    
+        $("button#generate").click(function (){
+            var checkedIds = [];
+            var allCheckboxes = document.getElementsByName('selectedspells');
+            for (var i = 0; i < allCheckboxes.length; i++){
+                if (allCheckboxes[i].checked){
+                    checkedIds.push(allCheckboxes[i].closest('li').id);
+                }
+            }
+            alert(checkedIds);
+            //alert(allCheckedElements[0].parentNode.parentNode.id);
+        })
+    
 			// reset button
 			$("button#reset").click(function() {
 				$("#filtertools select").val("All");
