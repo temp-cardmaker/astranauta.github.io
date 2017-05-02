@@ -211,8 +211,7 @@ function loadspells() {
                     checkedIds.push(allCheckboxes[i].closest('li').id);
                 }
             }
-            alert(checkedIds);
-            //alert(allCheckedElements[0].parentNode.parentNode.id);
+            generateSpellCards(checkedIds);
         })
     
 			// reset button
@@ -250,10 +249,13 @@ function sortspells(a, b, o) {
 
 }
 
-function usespell (id) {
-			$("#stats").html(tabledefault);
+function usespell (spellID, tableID) {
+            if (!tableID){
+                tableID = "stats"
+            }
+			$("#" + tableID).html(tabledefault);
 			var spelllist = spelldata.compendium.spell;
-			var curspell = spelllist[id];
+			var curspell = spelllist[spellID];
 
 			$("th#name").html("<span title=\""+parsesource(curspell.source)+"\" class='source source"+curspell.source+"'>"+curspell.source+"</span> "+curspell.name);
 
@@ -313,3 +315,17 @@ function usespell (id) {
 
 			return;
 		};
+
+function generateSpellCards(spellIDs){
+    if (!spellIDs || !spellIDs.length || spellIDs.length < 1){
+        return;
+    }
+    var w = window.open();
+    w.document.open();
+    for (var i = 0; i < spellIDs.length; i++){
+        w.document.write('<table id="spell'+ spellIDs[i] + '">' + tabledefault + '</table>');
+        usespell(spellIDs[i], 'spell' + spellIDs[i]);
+    }
+    w.document.close();
+    
+}
