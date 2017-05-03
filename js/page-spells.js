@@ -320,12 +320,6 @@ function generateSpellCards(spellIDs){
     if (!spellIDs || !spellIDs.length || spellIDs.length < 1){
         return;
     }
-    var w = window.open();
-    w.document.open();
-    for (var i = 0; i < spellIDs.length; i++){
-        w.document.write('<table id="spell'+ spellIDs[i] + '">' + tabledefault + '</table>');
-        usespell(spellIDs[i], 'spell' + spellIDs[i]);
-    }
-    w.document.close();
+    var w = window.open('/cards.html?cardtype=spells&ids=' + JSON.stringify(spellIDs));
     
 }
